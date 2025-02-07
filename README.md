@@ -10,7 +10,26 @@ Le projet a pour but de partager des actualités, des indicateurs et des annonce
 
 ![Insight Market News Architecture](img/InsightMarketNewsArchitecture.png)
 
-## Fonctionnalités
+## Fonctionnalités principales (Incrémentation en cours)
+
+### 🔍 **Analyse en temps réel**
+- Agrégation des dernières nouvelles des marchés boursiers à partir de sources fiables.
+- Suivi des indices mondiaux (Dow Jones, Nasdaq, CAC 40, etc.).
+- Notifications sur les mouvements importants des marchés (alertes de volatilité).
+
+### 📊 **Graphiques et Tendances**
+- Visualisation des tendances à l’aide de graphiques clairs et dynamiques.
+- Analyse technique simplifiée (moyennes mobiles, RSI, etc.).
+- Intégration de données historiques pour suivre l’évolution des cours.
+
+### 📈 **Informations clés**
+- Aperçu des performances journalières, hebdomadaires, et mensuelles des actions et indices.
+- Indicateurs macroéconomiques (taux d’intérêt, inflation, etc.).
+- Analyse des secteurs économiques et des entreprises phares.
+
+
+
+## Fonctionnalités (V 1.0.0 Implémenté)
 
 - Extraction des données de tendances de cryptomonnaies via l'API CoinMarketCap. [Lien du projet GitHub](https://github.com/mohamedberte/crypo_analysis_realtime/)
 - Utilisation d'**AWS Bedrock** pour l'analyse et la synthèse des données.
@@ -112,4 +131,3 @@ Le script principal `main.py` suit les étapes suivantes :
 
 #Crypto #TopPerformers #CryptoMarket #Bitcoin #Ethereum #Solana
 ```
-
