@@ -58,15 +58,7 @@ Le projet a pour but de partager des actualités, des indicateurs et des annonce
 
 ## Utilisation
 
-1. Configurez les clés API pour **Twitter (X v2)** dans le fichier `.env`.
-2. Déployez les fonctions AWS Lambda :
-    ```bash
-    serverless deploy
-    ```
-3. Lancez l'application :
-    ```bash
-    npm start
-    ```
+Configurez les clés API pour **Twitter (X v2)** dans le fichier `.env`.
 
 ## Contribuer
 
