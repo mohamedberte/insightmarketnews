@@ -278,14 +278,18 @@ class XPostFinanceFeatures:
 
 
 # Class get data from rest api http post bedrock [AWS API Gateway]
-
 class AwsApiGateWay:
-    def __init__(self, url, api_key):
+    def __init__(self, url):
         self.url = url
-        self.api_key = api_key
 
-    def postDataToBedrock(self, data : str):
+    def post_data(self, data: str):
         headers = {
             'Content-Type': 'application/json'
         }
-        response = requests.post(self.url, headers=headers, data=data)
+        payload = {
+            'post_brut': data
+        }
+        response = requests.post(self.url, headers=headers, json=payload)
+        if response.status_code != 200:
+            raise Exception(f"Erreur lors de l'envoi des données: {response.status_code} {response.text}")
+        return response.json()["body"]
