@@ -281,7 +281,7 @@ class XPostFinanceFeatures:
 
 class AwsApiGateWay:
     def __init__(self, url, api_key):
-        self.url = "https://tqs9vv6p8k.execute-api.eu-central-1.amazonaws.com/dev/postgen-agent"
+        self.url = url
         self.api_key = api_key
 
     def postDataToBedrock(self, data : str):

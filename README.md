@@ -1,74 +1,111 @@
-<<<<<<< HEAD
-=======
 # Insight Market News
 
-Insight Market News est une plateforme dédiée à la diffusion rapide et précise d'informations sur les marchés boursiers. Conçue pour les investisseurs, traders, et passionnés de finance, elle permet de suivre les tendances, analyser les mouvements du marché, et prendre des décisions éclairées.
+Votre source quotidienne d’analyses et d’actualités sur l’économie, la finance, la politique et la santé. Suivez nos insights pour des décisions plus éclairées.
 
----
+## Objectif du Projet
 
-## Fonctionnalités principales
+Ce projet vise à extraire les tendances des cryptomonnaies et autres actifs financier depuis l'API CoinMarketCap et d'autres API, puis à synthétiser ces informations grâce à AWS Bedrock pour générer un post et le publier sur le compte Insight Market News (compte X). L'objectif est d'informer les utilisateurs des tendances des actifs.
 
-### 🔍 **Analyse en temps réel**
-- Agrégation des dernières nouvelles des marchés boursiers à partir de sources fiables.
-- Suivi des indices mondiaux (Dow Jones, Nasdaq, CAC 40, etc.).
-- Notifications sur les mouvements importants des marchés (alertes de volatilité).
+## Fonctionnalités
 
-### 📊 **Graphiques et Tendances**
-- Visualisation des tendances à l’aide de graphiques clairs et dynamiques.
-- Analyse technique simplifiée (moyennes mobiles, RSI, etc.).
-- Intégration de données historiques pour suivre l’évolution des cours.
+- Extraction des données de tendances de cryptomonnaies via l'API CoinMarketCap.
+- Utilisation d'AWS Bedrock pour l'analyse et la synthèse des données.
+- Déploiement de fonctions AWS Lambda pour le traitement des données.
+- Utilisation d'API Gateway pour gérer les requêtes et les réponses.
+- Publication automatique des posts sur le compte Insight Market News.
 
-### 📈 **Informations clés**
-- Aperçu des performances journalières, hebdomadaires, et mensuelles des actions et indices.
-- Indicateurs macroéconomiques (taux d’intérêt, inflation, etc.).
-- Analyse des secteurs économiques et des entreprises phares.
+## Technologies Utilisées
 
----
+- **API CoinMarketCap** : Pour l'extraction des données de tendances des cryptomonnaies.
+- **AWS Bedrock** : Pour l'analyse et la synthèse des données.
+- **AWS Lambda** : Pour le traitement des données.
+- **API Gateway** : Pour la gestion des requêtes et des réponses.
+- **Compte X (anciennement Twitter)** : Pour la publication des posts.
 
-## Architecture technique
+## Installation
 
-### **1. Sources de données**
-- Collecte des informations via des API financières comme Yahoo Finance, Alpha Vantage, ou Bloomberg.
-- Analyse des tendances sur les réseaux sociaux pour repérer les sujets émergents.
+1. Clonez le dépôt :
+    ```bash
+    git clone https://github.com/username/insightmarketnews.git
+    ```
+2. Installez les dépendances nécessaires :
+    ```bash
+    cd insightmarketnews
+    ```
 
-### **2. Traitement des données**
-- **Pipeline de données** : Transformation et normalisation des données pour garantir leur fiabilité.
-- **Algorithmes de filtrage** : Classement des informations par pertinence et impact.
+## Utilisation
 
-### **3. Interface utilisateur**
-- Une application web et/ou mobile légère et intuitive.
-- Une section dédiée aux tendances chaudes et aux actualités récentes.
+1. Configurez les clés API pour CoinMarketCap et API Twitter (X v2) dans le fichier `.env`.
+2. Déployez les fonctions AWS Lambda :
+    ```bash
+    serverless deploy
+    ```
+3. Lancez l'application :
+    ```bash
+    npm start
+    ```
 
-### **4. Notifications et alertes**
-- Système de push notifications pour les alertes importantes.
-- Personnalisation des alertes par actif, secteur ou indicateur.
+## Contribuer
 
----
+Les contributions sont les bienvenues ! Veuillez soumettre une pull request ou ouvrir une issue pour discuter des changements que vous souhaitez apporter.
 
-## Exemple d’utilisation
+## Licence
 
-1. **Abonnez-vous** à Insight Market News via notre application ou site web.
-2. **Configurez vos préférences** : choisissez les indices, actions ou secteurs que vous voulez suivre.
-3. Recevez des **notifications en temps réel** sur les événements clés du marché.
-4. Accédez à des **analyses et graphiques** pour approfondir votre compréhension des mouvements boursiers.
+Ce projet est sous licence Free. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
----
+## Structure du Projet
 
-## Technologies utilisées
+```
+__pycache__/
+.env
+.gitignore
+api.py
+knowledge/
+    post/
+        crypto_post_2025-02-02.txt
+main.py
+readMe.md
+```
 
-- **Backend** : Python (Flask/Django), Node.js
-- **Frontend** : React.js / Vue.js
-- **Base de données** : PostgreSQL, MongoDB
-- **APIs externes** : Alpha Vantage, Yahoo Finance, Twitter API
-- **Cloud** : AWS / Google Cloud Platform
+## Description des Fichiers
 
----
+- `main.py` : Script principal pour l'extraction, l'analyse et la publication des données de performance des cryptomonnaies.
+- `api.py` : Contient les classes pour interagir avec l'API X (anciennement Twitter) et AWS API Gateway.
+- `knowledge/post/` : Contient les fichiers texte générés pour les posts quotidiens sur les performances des cryptomonnaies.
+- `.env` : Fichier de configuration pour les clés API.
+- `.gitignore` : Fichier pour ignorer les fichiers et dossiers spécifiques dans Git.
+- `readMe.md` : Documentation du projet.
 
-## Contributions
+## Exécution du Script Principal
 
-Les contributions sont les bienvenues ! Voici comment contribuer :
+Le script principal `main.py` effectue les étapes suivantes :
+1. Charge les variables d'environnement depuis le fichier `.env`.
+2. Lit les données de performance des cryptomonnaies pour aujourd'hui et hier.
+3. Trie les données pour obtenir les meilleures performances.
+4. Prépare le texte du post à partir des données triées.
+5. Sauvegarde le texte du post dans un fichier.
+6. Publie le post sur le compte X via l'API.
 
-1. Clonez le projet :  
-   ```bash
-   git clone https://github.com/mohamedberte/insightmarketnews.git
->>>>>>> 667a8c3e8078c06cc113b442c719251eb4c4dbe0
+## Exemple de Post Généré
+
+```
+🚀 Top 5 Crypto Performances Today (2025-02-04) 🚀
+
+📊 Comparatif avec hier :
+🔥 Bitcoin (BTC) maintient sa place en tête avec +5.2% aujourd’hui !
+🎉 Solana (SOL) fait une entrée fracassante dans le top avec +8.4% !
+⚠️ Ethereum (ETH) ralentit mais reste solide avec +2.1%.
+
+🔹 Classement du jour :
+1️⃣ Bitcoin (BTC) – +5.2% | $44,320 | Volume 24h : $25B
+2️⃣ Solana (SOL) – +8.4% | $112.4 | Volume 24h : $8B
+3️⃣ Ethereum (ETH) – +2.1% | $2,540 | Volume 24h : $15B
+4️⃣ XRP (XRP) – +3.8% | $0.67 | Volume 24h : $3B
+5️⃣ Cardano (ADA) – +4.5% | $0.52 | Volume 24h : $2B
+
+📌 Le marché évolue vite, restez informés ! 📌
+⚠️ Ceci n'est pas un conseil financier. Faites vos propres recherches avant d’investir.
+
+#Crypto #TopPerformers #CryptoMarket #Bitcoin #Ethereum #Solana
+----------------------------------
+```

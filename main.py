@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime
 import pandas as pd
-from api import XPostFinanceFeatures
+from api import AwsApiGateWay, XPostFinanceFeatures
 
 load_dotenv(override=True)
 
@@ -11,11 +11,16 @@ CONSUMER_SECRET = os.getenv('CONSUMER_SECRET')
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
 ACCESS_TOKEN_SECRET = os.getenv('ACCESS_TOKEN_SECRET')
 DATA_PATH = os.getenv('DATA_PATH')
+AWS_API_GATEWAY_URL = os.getenv('AWS_API_GATEWAY_URL')
 TOP_N = 5
 
 def get_today_filename():
     today_date = datetime.today().strftime('%Y-%m-%d')
     return f"{DATA_PATH}crypto_performance_data_{today_date}.csv"
+
+def get_yesterday_filename():
+    yesterday_date = (datetime.today() - pd.Timedelta(days=1)).strftime('%Y-%m-%d')
+    return f"{DATA_PATH}crypto_performance_data_{yesterday_date}.csv"
 
 def read_crypto_data(filename):
     if os.path.exists(filename):
@@ -27,9 +32,9 @@ def get_top_performers(data):
     sorted_data = data.sort_values(by='gain_percentage', ascending=False)
     return sorted_data.head(TOP_N)
 
-def prepare_post_text(top_performers):
-    today_date = datetime.today().strftime('%Y-%m-%d')
-    post_text = f"🚀 Top {TOP_N} Crypto Performances Today ({today_date}) 🚀\n\n"
+def prepare_post_text(top_performers, period='today_indicator'):
+    #today_date = datetime.today().strftime('%Y-%m-%d')
+    post_text = f" {period} : \n\n"
     for index, row in top_performers.iterrows():
         post_text += (
             f" * {row['name_today']} ({row['symbol_today']}):\n"
@@ -38,8 +43,7 @@ def prepare_post_text(top_performers):
             f"📊 Volume: {row['volume_24h_today']:.2f}\n"
         )
     post_text += (
-        "Please note that we are not responsible for any financial decisions made based on this information.\n"
-        "#Crypto #TopPerformers #CryptoMarket #CryptoNews"
+        f"----------------------------------\n"
     )
     return post_text
 
@@ -58,10 +62,27 @@ def post_to_twitter(text, service):
     service.post_tweet(text)
 
 if __name__ == "__main__":
-    filename = get_today_filename()
-    crypto_data = read_crypto_data(filename)
-    top_performers = get_top_performers(crypto_data)
-    post_text = prepare_post_text(top_performers)
+    filename_today = get_today_filename()
+    filename_yesterday = get_yesterday_filename
+
+    crypto_data_today = read_crypto_data(filename_today)
+    crypto_data_yesterday = read_crypto_data(filename_yesterday)
+
+    top_performers_today = get_top_performers(crypto_data_today)
+    top_performers_yesterday = get_top_performers(crypto_data_yesterday)
+
+    post_text_today = prepare_post_text(top_performers_today, period='today_indicator')
+    post_text_yesterday = prepare_post_text(top_performers_yesterday, period='yesterday_indicator')
+
+    post_text = post_text_today + post_text_yesterday
+
+    save_post_text(post_text)
+
+    aws = AwsApiGateWay(url=AWS_API_GATEWAY_URL)
+
+    res = aws.postDataToBedrock(post_text)
+
+    print(res)
         
     service = XPostFinanceFeatures(consumer_key=CONSUMER_KEY,
                                    consumer_secret=CONSUMER_SECRET,
