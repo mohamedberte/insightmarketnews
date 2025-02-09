@@ -47,24 +47,29 @@ def format_TwitterPost(post_brut:str)-> str:
         print("Error when saving the Tweets to s3")'''
 
 def lambda_handler(event, context):
-    print(event)
-    #event=json.loads(event['body'])
+    # event = json.loads(event['body'])  # Uncomment this line if necessary to parse event body as JSON
     
-    post_brut=event['post_brut']
-
-    post_formatted=format_TwitterPost(post_brut=post_brut)
+    post_brut = event['post_brut']
+    post_formatted = format_TwitterPost(post_brut=post_brut)
 
     if post_formatted:
-        '''current_time=datetime.now().strftime('%H%M%S')
-        s3_key=f"post_formatted-output/{current_time}.txt"
-        s3_bucket='aws_bedrock_insightMarketNews'
-        save_blog_details_s3(s3_key,s3_bucket,generate_blog)'''
-        return{
-        'statusCode':200,
-        'body':json.dumps(f'{post_formatted}')
-        }      
-
-    return{
-        'statusCode':500,
-        'body':json.dumps('Nothing is generated')
-    }
+        # current_time = datetime.now().strftime('%H%M%S')
+        # s3_key = f"post_formatted-output/{current_time}.txt"
+        # s3_bucket = 'aws_bedrock_insightMarketNews'
+        # save_blog_details_s3(s3_key, s3_bucket, generate_blog)
+    
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'text/plain; charset=utf-8'
+            },
+            'body': post_formatted.encode('utf-8').decode('utf-8')
+        }
+    else:
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'text/plain; charset=utf-8'
+            },
+            'body': 'Nothing is generated'
+        }

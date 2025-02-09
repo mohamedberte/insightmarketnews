@@ -1,5 +1,7 @@
+from time import sleep
 import requests
 from requests_oauthlib import *
+import textwrap
 
 class XPostFinanceFeatures:
     def __init__(self, consumer_key, consumer_secret, access_token, access_token_secret):
@@ -26,12 +28,13 @@ class XPostFinanceFeatures:
 
     def post_long_tweet(self, text):
         """Poster un tweet long en utilisant des threads"""
-        if len(text) <= 200:
+        if len(text) <= 275:
             # Si le texte est inférieur ou égal à 280 caractères, poster directement
             return self.post_tweet(text)
-        
-        # Diviser le texte en morceaux de 280 caractères
-        tweets = [text[i:i+200] + '...' for i in range(0, len(text), 200)]
+    
+        # Diviser le texte en morceaux de 275 caractères sans couper les mots
+        tweets = textwrap.wrap(text, width=275, break_long_words=False)
+        tweets = [tweet + '...' if i < len(tweets) - 1 else tweet for i, tweet in enumerate(tweets)]
         
         # Poster le premier tweet
         response = self.post_tweet(tweets[0])
@@ -40,10 +43,11 @@ class XPostFinanceFeatures:
         
         # Récupérer l'ID du tweet initial
         tweet_id = response.json()['data']['id']
-        
+        sleep(2)
         # Poster les tweets suivants en réponse au premier tweet
         for tweet in tweets[1:]:
             response = self.reply_to_tweet(tweet, tweet_id=tweet_id)
+            sleep(2)
         return response
     
     def post_tweet(self, text, in_reply_to_tweet_id=None):
@@ -292,4 +296,4 @@ class AwsApiGateWay:
         response = requests.post(self.url, headers=headers, json=payload)
         if response.status_code != 200:
             raise Exception(f"Erreur lors de l'envoi des données: {response.status_code} {response.text}")
-        return response.json()["body"]
+        return response.json()['body']
